@@ -19,31 +19,46 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background-color: blueviolet;
+  background: rgb(94,35,20);
+  background: linear-gradient(90deg, rgba(94,35,20,1) 0%, rgba(90,0,0,1) 100%);
   font-family: 'Lato', sans-serif;
   display: flex;
   min-height: 100vh;
   align-items: center;
+   
+  main#app {
+    padding: 0;
+    background-color: rgba(255, 255, 255, 0.41);
+    min-width: 85vw;
+    min-height: 90vh;
+    display: flex;
+    position: relative;
+    border-radius: 15px;
   
-  main {
-    min-width: 90vw;
-    min-height: 80vh;
-    background-color: white;
-    
     .player {
-      height: 100%;
-      width: 50%;		
-      float: left;
       &.p1 {
-        background-color: aliceblue;
+        position: absolute;
+        left: 50%;
+        width: 50%;
+        height: 100%;
+        background-color: #ffffff;
+        border-radius: 0px 15px 15px 0px;
+        
       }
       
       &.p2 {
-        background-color: bisque;
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        background-color: #f7f7f7;
+        border-radius: 15px 0px 0px 15px;
+        
       }
     }
   }
+
 }
