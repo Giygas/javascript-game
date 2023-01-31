@@ -33,51 +33,65 @@ body {
    
   main#app {
     padding: 0;
-    background-color: rgba(255, 255, 255, 0.41);
     min-width: 85vw;
     min-height: 90vh;
     display: flex;
     position: relative;
     border-radius: 15px;
     
-    .options {
+    .main-container {
       position: absolute;
-      padding-top: 6rem;
+      padding-top: 3rem;
       width: 100%;
       height: 100%;
       z-index: 4;
-      
-      #hold {
-        margin-top: 4rem;
-      }
-      
-      h2 {
-        font-weight: 300;
-        color: black;
-                
-        span {
-          display: flex;
-          justify-content: center;
-          width: 200px;
-          margin: auto;
-        }
+  
+
+      span {
+        display: flex;
+        align-items: baseline;
         
-        &.spacer {
-          margin-top: 30rem;
+        &.button {
+          cursor: pointer;
+          padding: 2rem 0rem;
         }
-        
       }
       
       img {
         height: 20px;
         width: 20px;
         margin-right: 10px;
-        left: 41%;
-        align-self: flex-end;
+      
       }
       
-      .button {
-        cursor: pointer;
+      h2{
+        font-weight: 300;
+        color: black;
+        margin: 0;
+      }
+      
+      .newGame {
+        justify-content: center;
+        display: flex;
+      }
+      
+      .dice-container {
+        height: 50vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .buttonWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .currentPoints {
+        display: flex;
+        align-self: center;
+        justify-content: center;
       }
     }
   
