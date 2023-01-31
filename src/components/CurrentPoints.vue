@@ -12,7 +12,7 @@
 <style lang="scss">
 
 .currentPoints {
-    background-color: #ea4d4c;
+    background-color: #ae3636;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,12 +22,14 @@
     h3 {
       font-weight: 400;
       font-size: 2.5rem;
+      margin-bottom: 1rem;
     }
     
     h4 {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
       color: black;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 400;
       
     }
