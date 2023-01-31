@@ -39,83 +39,29 @@ body {
     position: relative;
     border-radius: 15px;
     
-    .main-container {
-      position: absolute;
-      padding-top: 3rem;
-      width: 100%;
-      height: 100%;
-      z-index: 4;
+    
   
-
-      span {
-        display: flex;
-        align-items: baseline;
-        
-        &.button {
-          cursor: pointer;
-          padding: 2rem 0rem;
-        }
-      }
+    // .player {
+    //   position: absolute;
+    //   width: 50%;
+    //   height: 100%;
+    //   padding-top: 1rem;
+    //   padding-bottom: 1rem;
+    //   text-align: center;
       
-      img {
-        height: 20px;
-        width: 20px;
-        margin-right: 10px;
+    //   &.p1 {
+    //     padding-right: 1rem;
+    //     left: 50%;
+    //     background-color: #ffffff;
+    //     border-radius: 0px 15px 15px 0px;
+    //   }
       
-      }
-      
-      h2{
-        font-weight: 300;
-        color: black;
-        margin: 0;
-      }
-      
-      .newGame {
-        justify-content: center;
-        display: flex;
-      }
-      
-      .dice-container {
-        height: 50vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .buttonWrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .currentPoints {
-        display: flex;
-        align-self: center;
-        justify-content: center;
-      }
-    }
-  
-    .player {
-      position: absolute;
-      width: 50%;
-      height: 100%;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      text-align: center;
-      
-      &.p1 {
-        padding-right: 1rem;
-        left: 50%;
-        background-color: #ffffff;
-        border-radius: 0px 15px 15px 0px;
-      }
-      
-      &.p2 {
-        padding-left: 1rem;
-        background-color: #f7f7f7;
-        border-radius: 15px 0px 0px 15px;
-      }
-    }
+    //   &.p2 {
+    //     padding-left: 1rem;
+    //     background-color: #f7f7f7;
+    //     border-radius: 15px 0px 0px 15px;
+    //   }
+    // }
   }
 
 }
