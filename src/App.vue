@@ -3,15 +3,47 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div class="main-container">
+        <div class="grid newGame">
+            <h2>
+              <span id="newGame" class="button">
+                <img src=${plusIcon} alt="Plus"/>NEW GAME
+              </span>
+            </h2>
+        </div>
+        
+        <div class="grid dice-container">
+          <div id="player1">1</div>
+          <div id>
+            2
+          </div>
+          <div id="player2">3</div>
+        </div>
+        
+        <div class="grid">
+          <div class="currentPoints">
+            Current Points
+          </div>
+          <div class="buttonWrapper">
+            <h2 class="spacer button">
+              <span id="roll" class="button">
+                <img src=${refreshIcon} alt="Plus"/>ROLL
+              </span>
+            </h2>
+            <h2>
+              <span id="hold" class="button">
+                <img src=${arrowDown} alt="Plus"/>HOLD
+              </span>
+            </h2>
+          </div>
+          <div class="currentPoints">
+            Current points
+          </div>
+        </div>
+      </div>
+      
+      <div class="player p1"></div>
+      <div class="player p2"></div>
 </template>
 
 <style scoped>
