@@ -1,5 +1,5 @@
 {
-  "name": "javascript-game",
+  "name": "javascript-game2",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,12 +8,11 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "file-loader": "^6.2.0",
-    "sass": "^1.57.1",
-    "vite": "^4.0.0"
-  },
   "dependencies": {
-    "@picocss/pico": "^1.5.7"
+    "vue": "^3.2.45"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.0.0"
   }
 }
