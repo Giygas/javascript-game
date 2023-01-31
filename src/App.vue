@@ -1,5 +1,11 @@
 <script>
+import CurrentPoints from './components/CurrentPoints.vue'
 
+export default {
+  components: {
+    CurrentPoints
+  }
+}
 </script>
 
 <template>
@@ -21,9 +27,7 @@
         </div>
         
         <div class="grid">
-          <div class="currentPoints">
-            Current Points
-          </div>
+          <CurrentPoints/>
           <div class="buttonWrapper">
             <h2 class="spacer button">
               <span id="roll" class="button">
@@ -36,21 +40,16 @@
               </span>
             </h2>
           </div>
-          <div class="currentPoints">
-            Current points
-          </div>
+          <CurrentPoints/>
         </div>
       </div>
-      
-      <div class="player p1"></div>
-      <div class="player p2"></div>
 </template>
 
 <style lang="scss" scoped>
 .main-container {
   background-color: #ffffff;
   position: absolute;
-  padding-top: 3rem;
+  padding: 2rem 5rem;
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -102,11 +101,6 @@
     align-items: center;
   }
   
-  .currentPoints {
-    display: flex;
-    align-self: center;
-    justify-content: center;
-  }
 }
 
 .main-container::after {
