@@ -2,14 +2,22 @@
 export default {
   props: {
     pNumber: Number
-  },
+  }
 }
 </script>
 
 <template>
-  <div class="player">
+  <div v-if="this.pNumber===1" class="player">
     <h1 class="display-2">
-      PLAYER {{ pNumber }} <img src="../assets/redDot.svg" alt="red dot" class="red-dot">
+      PLAYER {{ pNumber }} <img src="../assets/redDot.svg" alt="red dot" class="red-dot"/>
+    </h1>
+    <h1 class="display-1">
+      48
+    </h1>
+  </div>
+  <div v-else class="player">
+    <h1 class="display-2">
+      <img src="../assets/redDot.svg" alt="red dot" class="red-dot"/> PLAYER {{ pNumber }}
     </h1>
     <h1 class="display-1">
       48

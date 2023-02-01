@@ -1,38 +1,39 @@
 <script>
-var elDiceOne       = document.getElementById('dice1');
-var elDiceTwo       = document.getElementById('dice2');
-var elComeOut       = document.getElementById('roll');
+  export default {
+    data() {
+      return {
+        elDice: "",
+        dice: ""
+      }
+    },
+    mounted() {
+      this.elDice = this.$refs.dice
+      console.log(this.elDice)
+    },
+    methods: {
+      rollDice() {
+        console.log(this.elDice)
+        this.dice   = Math.floor((Math.random() * 6) + 1);
+    
+        console.log(this.dice);
 
-elComeOut.onclick   = function () {rollDice();};
+        for (let i = 1; i <= 6; i++) {
+          this.elDice.classList.remove('show-' + i);
+          if (this.dice === i) {
+            this.elDice.classList.add('show-' + i);
+          }
+        }
 
-function rollDice() {
-
-  var diceOne   = Math.floor((Math.random() * 6) + 1);
-  var diceTwo   = Math.floor((Math.random() * 6) + 1);
- 
-  console.log(diceOne + ' ' + diceTwo);
-
-  for (var i = 1; i <= 6; i++) {
-    elDiceOne.classList.remove('show-' + i);
-    if (diceOne === i) {
-      elDiceOne.classList.add('show-' + i);
+        // setTimeout(this.rollDice, 1000);
+      }
     }
   }
-
-  for (var k = 1; k <= 6; k++) {
-    elDiceTwo.classList.remove('show-' + k);
-    if (diceTwo === k) {
-      elDiceTwo.classList.add('show-' + k);
-    }
-  } 
-  setTimeout(rollDice(), 1000);
-}
 </script>
 
 <template>
-   <div class="game">
-    <div class="container-dice">
-      <div id='dice1' class="dice dice-one">
+  <div class="game">
+    <div class="container-dice" @click="rollDice">
+      <div id='dice' class="dice" ref="dice">
         <div id="dice-one-side-one" class='side one'>
           <div class="dot one-1"></div>
         </div>
@@ -67,49 +68,30 @@ function rollDice() {
           <div class="dot six-6"></div>
         </div>
       </div>
-   </div>
-   <div id='roll' class='roll-button'><button>Roll dice!</button></div>
+    </div>
   </div> 
 </template>
 
 <style>
-
 .game {
   position: relative;
-  width: 300px;
-  height: 40vh; 
 }
-
 .container-dice {
-  position: relative;
   display: inline-block;
-  top: 200px;
-}
-
-button {
-  position: relative;
-  top:80px;
-  padding: 15px 50px;
-  color: #fff;
   background-color: #f4d35e;
-  border: none;
-  font-size: 20px;
-  border-radius: 20px; 
-  box-shadow: 1px 3px #50514F;
-  outline: none;
-  transition: .3s; 
-}
-button:hover, button:active {
-  outline: none;
-  background: #50514F;
-  cursor: pointer;
-  transform: translateY(15px); 
+  width: fit-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  
 }
 
 .dice {
-  position: relative;
-  width: 100px;
-  height: 100px;
+  display: block;
+  width: 150px;
+  height: 150px;
   transform-style: preserve-3d;
   transition: transform 1s; }
 
@@ -122,20 +104,12 @@ button:hover, button:active {
   background-color: #ef233c;
   box-shadow: inset 2px 2px #d90429;}
 
-.dice-one {
-  left: 450px; }
-
-.dice-two {
-  left: 300px;
-  top:-200px;
-}
-
 .side {
   position: absolute;
   background-color: #ffF;
   border-radius:5px;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border: 1px solid #e5e5e5;
   text-align: center;
   line-height: 2em;

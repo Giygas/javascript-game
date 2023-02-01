@@ -1,13 +1,13 @@
 <script>
 import CurrentPoints from './components/CurrentPoints.vue'
-// import Dice from './components/Dice.vue'
+import Dice from './components/Dice.vue'
 import PlayerDash from './components/PlayerDash.vue';
 
 export default {
   components: {
     CurrentPoints,
-    // Dice,
-    PlayerDash
+    Dice,
+    PlayerDash,
   }
 }
 </script>
@@ -27,7 +27,8 @@ export default {
             <PlayerDash :pNumber="1"/>
           </div>
           <div id="dice">
-            <div class="square"></div>
+            <!-- <div class="square"></div> -->
+            <Dice />
           </div>
           <div id="player2">
             <PlayerDash :pNumber="2"/>
@@ -102,14 +103,14 @@ export default {
       align-self: center;
     }
     
-    #dice {
-      background-color: aqua;
-      margin-top: 5rem;
-      .square {
-        width: 150px;
-        height: 150px;
-      }
-    }
+    // #dice {
+    //   background-color: aqua;
+    //   margin-top: 5rem;
+    //   .square {
+    //     width: 150px;
+    //     height: 150px;
+    //   }
+    // }
   }
   
   .buttonWrapper {

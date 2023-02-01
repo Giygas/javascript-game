@@ -23,6 +23,7 @@
       font-weight: 400;
       font-size: 2.5rem;
       margin-bottom: 1rem;
+      color: bisque;
     }
     
     h4 {
