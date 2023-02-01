@@ -1,9 +1,13 @@
 <script>
 import CurrentPoints from './components/CurrentPoints.vue'
+// import Dice from './components/Dice.vue'
+import PlayerDash from './components/PlayerDash.vue';
 
 export default {
   components: {
-    CurrentPoints
+    CurrentPoints,
+    // Dice,
+    PlayerDash
   }
 }
 </script>
@@ -19,11 +23,15 @@ export default {
         </div>
         
         <div class="grid dice-container">
-          <div id="player1">1</div>
-          <div id>
-            2
+          <div id="player1">
+            <PlayerDash :pNumber="1"/>
           </div>
-          <div id="player2">3</div>
+          <div id="dice">
+            <div class="square"></div>
+          </div>
+          <div id="player2">
+            <PlayerDash :pNumber="2"/>
+          </div>
         </div>
         
         <div class="grid">
@@ -49,7 +57,7 @@ export default {
 .main-container {
   background-color: #ffffff;
   position: absolute;
-  padding: 2rem 5rem;
+  padding: 2rem 6rem;
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -85,13 +93,22 @@ export default {
   }
   
   .dice-container {
-    height: 50vh;
+    height: 55vh;
     display: grid;
     grid-template-rows: 1fr;
     padding-bottom: 5rem;
     div {
       justify-self: center;
       align-self: center;
+    }
+    
+    #dice {
+      background-color: aqua;
+      margin-top: 5rem;
+      .square {
+        width: 150px;
+        height: 150px;
+      }
     }
   }
   
@@ -115,4 +132,5 @@ export default {
   position: absolute;
   border-radius: 15px;
 }
+
 </style>

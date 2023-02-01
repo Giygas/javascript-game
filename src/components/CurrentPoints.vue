@@ -29,7 +29,7 @@
       margin-top: 0.5rem;
       margin-bottom: 1rem;
       color: black;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 400;
       
     }
