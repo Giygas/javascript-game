@@ -51,7 +51,7 @@
   
 </template>
 
-<style>
+<style scoped>
 .game {
   position: relative;
   
