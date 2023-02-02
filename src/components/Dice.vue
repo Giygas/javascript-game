@@ -22,7 +22,7 @@
       }, 150)
     },
     getLastDiceRoll() {
-      console.log(this.diceNum)
+      return this.diceNum
     }
   },
   computed: {
@@ -75,27 +75,27 @@
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 .dice-1 {
-  background-image: url("../assets/dice-1.svg");
+  background-image: url("../assets/dice-icons/dice-1.svg");
   
 }
 .dice-2 {
-  background-image: url("../assets/dice-2.svg");
+  background-image: url("../assets/dice-icons/dice-2.svg");
 
 }
 .dice-3 {
-  background-image: url("../assets/dice-3.svg");
+  background-image: url("../assets/dice-icons/dice-3.svg");
 
 }
 .dice-4 {
-  background-image: url("../assets/dice-4.svg");
+  background-image: url("../assets/dice-icons/dice-4.svg");
 
 }
 .dice-5 {
-  background-image: url("../assets/dice-5.svg");
+  background-image: url("../assets/dice-icons/dice-5.svg");
 
 }
 .dice-6 {
-  background-image: url("../assets/dice-6.svg");
+  background-image: url("../assets/dice-icons/dice-6.svg");
 
 }
 </style>

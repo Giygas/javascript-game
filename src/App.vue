@@ -27,7 +27,6 @@ export default {
             <PlayerDash :pNumber="1"/>
           </div>
           <div id="dice">
-            <!-- <div class="square"></div> -->
             <Dice />
           </div>
           <div id="player2">
@@ -94,23 +93,16 @@ export default {
   }
   
   .dice-container {
-    height: 55vh;
+    height: 45vh;
     display: grid;
     grid-template-rows: 1fr;
     padding-bottom: 5rem;
+    
     div {
       justify-self: center;
       align-self: center;
     }
     
-    // #dice {
-    //   background-color: aqua;
-    //   margin-top: 5rem;
-    //   .square {
-    //     width: 150px;
-    //     height: 150px;
-    //   }
-    // }
   }
   
   .buttonWrapper {
