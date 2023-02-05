@@ -27,8 +27,17 @@ export default {
       }
       
       this.p1Current = !this.p1Current
+      //#TODO remove this
       console.log("p1: " + this.p1Points)
       console.log("p2: " + this.p2Points)
+    },
+    
+    roll() {
+      this.$refs.dice.rollDice()
+    },
+    
+    hold() {
+      this.$refs.dice.addTotal()
     }
   },
 }
@@ -49,7 +58,7 @@ export default {
             <PlayerDash :pNumber="1"/>
           </div>
           <div id="dice">
-            <Dice @finished="addPoints"/>
+            <Dice @finished="addPoints" ref="dice"/>
           </div>
           <div id="player2">
             <PlayerDash :pNumber="2"/>
@@ -60,12 +69,12 @@ export default {
           <CurrentPoints/>
           <div class="buttonWrapper">
             <h2 class="spacer button">
-              <span id="roll" class="button">
+              <span id="roll" class="button" @click="roll">
                 <img src="./assets/refreshIcon.svg" alt="Plus"/>ROLL
               </span>
             </h2>
             <h2>
-              <span id="hold" class="button">
+              <span id="hold" class="button" @click="hold">
                 <img src="./assets/arrowDown.svg" alt="Plus"/>HOLD
               </span>
             </h2>

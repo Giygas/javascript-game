@@ -75,9 +75,7 @@
         <div :class="getDice"></div>
       </div>
     </div>
-  </div> 
-  <button @click="rollDice">Roll the dice!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</button>
-  <button @click="addTotal">Add to the total!!!!!!!!!!!!!</button>
+  </div>
   
 </template>
 
