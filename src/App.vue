@@ -19,7 +19,16 @@ export default {
   },
   methods: {
     addPoints(currentPoints) {
-      console.log("parent: " + currentPoints)
+      // Add points to the current player and change player
+      if (this.p1Current) {
+        this.p1Points += currentPoints 
+      } else {
+        this.p2Points += currentPoints
+      }
+      
+      this.p1Current = !this.p1Current
+      console.log("p1: " + this.p1Points)
+      console.log("p2: " + this.p2Points)
     }
   },
 }
