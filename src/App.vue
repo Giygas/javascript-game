@@ -4,11 +4,24 @@ import Dice from './components/Dice.vue'
 import PlayerDash from './components/PlayerDash.vue';
 
 export default {
+  name: 'App',
+  data() {
+    return {
+      p1Points: 0,
+      p2Points: 0,
+      p1Current: true,
+    }
+  },
   components: {
     CurrentPoints,
     Dice,
     PlayerDash,
-  }
+  },
+  methods: {
+    addPoints(currentPoints) {
+      console.log("parent: " + currentPoints)
+    }
+  },
 }
 </script>
 
@@ -27,7 +40,7 @@ export default {
             <PlayerDash :pNumber="1"/>
           </div>
           <div id="dice">
-            <Dice />
+            <Dice @finished="addPoints"/>
           </div>
           <div id="player2">
             <PlayerDash :pNumber="2"/>

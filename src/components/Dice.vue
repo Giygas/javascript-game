@@ -1,40 +1,70 @@
 <script>
   export default {
-  name: "App",
-  data() {
-    return {
-      diceNum: 1,
-      numberBuffer: []
-    };
-  },
-  methods: {
-    setRandomDiceData() {
-      this.diceNum = Math.floor(Math.random() * 6) + 1
+    name: "Dice",
+    data() {
+      return {
+        diceNum: 1,
+        roundPoints: 0,
+      }
     },
-    setDice() {
-      let count = 0
-      const timer = setInterval(() => {
-        this.setRandomDiceData()
-        if (count >= 6) {
-          clearInterval(timer)
-        }
-        count += 1
-      }, 150)
+    emits: {
+      finished: null,
     },
-    getLastDiceRoll() {
-      return this.diceNum
+    methods: {
+      setRandomDiceData() {
+        // Get a random number between 1 and 6
+        this.diceNum = Math.floor(Math.random() * 6) + 1
+      },
+      
+      rollDice() {
+        //Create a mini animation when rolling dice
+        let count = 0
+        const timer = setInterval(() => {
+          this.setRandomDiceData()
+          if (count >= 6) {
+            clearInterval(timer)
+            // Add the points when the interval finishes
+            this.addPoints()
+          }
+          count += 1
+        }, 150)
+      },
+      
+      addPoints() {
+        // Current points in the round
+        // If the number is 1, the player gets 0 points and
+        // the next player will start
+        this.roundPoints = this.roundPoints + this.diceNum
+        console.log('inner' + this.roundPoints)
+        console.log('inner' + this.diceNum)
+        if (this.diceNum === 1) {
+            this.roundPoints = 0;
+            this.addTotal();
+          }
+      },
+        
+      addTotal() {
+        //Adds the total to the current player and restart
+        this.$emit('finished', this.roundPoints)
+        this.roundPoints = 0
+        this.diceNum = 1
+      },
+    },
+    computed: {
+      getDice() {
+        // Sets the class with the current number for the dice
+        // everytime the dice status changes
+        return `dice dice-${this.diceNum}`
+      }
+    },
+    watch: {
+      diceNum() {
+        console.log("Dice rolled!" + this.diceNum)
+      },
+      roundPoints() {
+        console.log("Round points " + this.roundPoints)
+      }
     }
-  },
-  computed: {
-    getDice() {
-      return `dice dice-${this.diceNum}`;
-    }
-  },
-  watch: {
-    diceNum() {
-      console.log("Dice rolled!");
-    }
-  }
   }
 </script>
 
@@ -46,8 +76,8 @@
       </div>
     </div>
   </div> 
-  <button @click="setDice">Roll the dice!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</button>
-  <button @click="getLastDiceRoll">Add to the total!!!!!!!!!!!!!</button>
+  <button @click="rollDice">Roll the dice!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</button>
+  <button @click="addTotal">Add to the total!!!!!!!!!!!!!</button>
   
 </template>
 
