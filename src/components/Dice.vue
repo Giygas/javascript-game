@@ -9,6 +9,7 @@
     },
     emits: {
       finished: null,
+      partial: null,
     },
     methods: {
       setRandomDiceData() {
@@ -35,12 +36,14 @@
         // If the number is 1, the player gets 0 points and
         // the next player will start
         this.roundPoints = this.roundPoints + this.diceNum
-        console.log('inner' + this.roundPoints)
-        console.log('inner' + this.diceNum)
         if (this.diceNum === 1) {
             this.roundPoints = 0;
+            
             this.addTotal();
           }
+        // Emit an event to change the round poins for the
+        // current player
+        this.$emit('partial', this.roundPoints)
       },
         
       addTotal() {

@@ -1,7 +1,8 @@
 <script>
 export default {
   props: {
-    pNumber: Number
+    pNumber: Number,
+    points: Number
   }
 }
 </script>
@@ -12,7 +13,7 @@ export default {
       PLAYER {{ pNumber }} <img src="../assets/redDot.svg" alt="red dot" class="red-dot"/>
     </h1>
     <h1 class="display-1">
-      48
+      {{ points }}
     </h1>
   </div>
   <div v-else class="player">
@@ -20,7 +21,7 @@ export default {
       <img src="../assets/redDot.svg" alt="red dot" class="red-dot"/> PLAYER {{ pNumber }}
     </h1>
     <h1 class="display-1">
-      48
+      {{ points  }}
     </h1>
   </div>
 </template>

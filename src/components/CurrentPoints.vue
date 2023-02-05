@@ -1,11 +1,13 @@
 <script>
-
+  export default {
+    props: ['current'],
+  }
 </script>
 
 <template>
   <div class="currentPoints">
     <h4>CURRENT</h4>
-    <h3>10</h3>
+    <h3>{{ current }}</h3>
   </div>
 </template>
 

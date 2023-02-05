@@ -7,9 +7,16 @@ export default {
   name: 'App',
   data() {
     return {
+      // Global player points
       p1Points: 0,
       p2Points: 0,
+      // If the current player is player 1
       p1Current: true,
+      // Round points for each player.
+      // Just because I have 2 CurrentPoints components
+      //#TODO refactor this to include currenpoints in the playerDashboard 
+      points1: 0,
+      points2: 0,
     }
   },
   components: {
@@ -22,14 +29,12 @@ export default {
       // Add points to the current player and change player
       if (this.p1Current) {
         this.p1Points += currentPoints 
+        this.points1 = 0
       } else {
         this.p2Points += currentPoints
+        this.points2 = 0
       }
-      
       this.p1Current = !this.p1Current
-      //#TODO remove this
-      console.log("p1: " + this.p1Points)
-      console.log("p2: " + this.p2Points)
     },
     
     roll() {
@@ -38,8 +43,18 @@ export default {
     
     hold() {
       this.$refs.dice.addTotal()
+    },
+    
+    roundPartial(partial) {
+      console.log("roundPartial: " + partial)
+      if (this.p1Current) {
+        this.points1 = partial
+      } else {
+        this.points2 = partial
+      }
     }
-  },
+  
+  }
 }
 </script>
 
@@ -55,18 +70,18 @@ export default {
         
         <div class="grid dice-container">
           <div id="player1">
-            <PlayerDash :pNumber="1"/>
+            <PlayerDash :pNumber="1" :points="p1Points"/>
           </div>
           <div id="dice">
-            <Dice @finished="addPoints" ref="dice"/>
+            <Dice @finished="addPoints" @partial="roundPartial" ref="dice"/>
           </div>
           <div id="player2">
-            <PlayerDash :pNumber="2"/>
+            <PlayerDash :pNumber="2" :points="p2Points"/>
           </div>
         </div>
         
         <div class="grid">
-          <CurrentPoints/>
+          <CurrentPoints :current="points1"/>
           <div class="buttonWrapper">
             <h2 class="spacer button">
               <span id="roll" class="button" @click="roll">
@@ -79,7 +94,7 @@ export default {
               </span>
             </h2>
           </div>
-          <CurrentPoints/>
+          <CurrentPoints :current="points2"/>
         </div>
       </div>
 </template>
