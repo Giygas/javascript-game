@@ -46,13 +46,21 @@ export default {
     },
     
     roundPartial(partial) {
-      console.log("roundPartial: " + partial)
+      // #TODO refactor CurrentPoints into PlayerDash
       if (this.p1Current) {
         this.points1 = partial
       } else {
         this.points2 = partial
       }
-    }
+    },
+    
+    restartGame() {
+      this.p1Points = 0,
+      this.p2Points = 0,
+      this.p1Current = true,
+      this.points1 = 0,
+      this.points2 = 0
+    },
   
   }
 }
@@ -62,7 +70,7 @@ export default {
   <div class="main-container">
         <div class="grid newGame">
             <h2>
-              <span id="newGame" class="button">
+              <span id="newGame" class="button" @click="restartGame">
                 <img src="./assets/plusIcon.svg" alt="Plus"/>NEW GAME
               </span>
             </h2>
@@ -70,13 +78,21 @@ export default {
         
         <div class="grid dice-container">
           <div id="player1">
-            <PlayerDash :pNumber="1" :points="p1Points"/>
+            <PlayerDash 
+              :pNumber="1"
+              :points="p1Points"
+              :p1Plays="p1Current"
+            />
           </div>
           <div id="dice">
             <Dice @finished="addPoints" @partial="roundPartial" ref="dice"/>
           </div>
           <div id="player2">
-            <PlayerDash :pNumber="2" :points="p2Points"/>
+            <PlayerDash
+              :pNumber="2"
+              :points="p2Points"
+              :p1Plays="p1Current"
+            />
           </div>
         </div>
         
