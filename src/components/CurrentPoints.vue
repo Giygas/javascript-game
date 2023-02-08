@@ -18,23 +18,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px 30px;
+    justify-content: center;
+    width: 200px;
+    height: 150px;
     margin: auto;
+    margin-top: 10rem;
     
     h3 {
       font-weight: 400;
       font-size: 2.5rem;
-      margin-bottom: 1rem;
       color: bisque;
+      margin: 0.5rem;
     }
     
     h4 {
-      margin-top: 0.5rem;
-      margin-bottom: 1rem;
       color: black;
       font-size: 1.3rem;
       font-weight: 400;
-      
+      margin: 0.5rem;
     }
   }
 </style>
