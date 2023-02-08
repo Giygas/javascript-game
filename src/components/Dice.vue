@@ -8,8 +8,8 @@
       }
     },
     emits: {
-      finished: null,
       partial: null,
+      lose: null,
     },
     methods: {
       setRandomDiceData() {
@@ -31,26 +31,25 @@
         }, 150)
       },
       
+      endRound() {
+        //Adds the total to the current player and restart
+        this.roundPoints = 0
+        this.diceNum = 1
+      },
+      
       addPoints() {
         // Current points in the round
         // If the number is 1, the player gets 0 points and
         // the next player will start
         this.roundPoints = this.roundPoints + this.diceNum
+
         if (this.diceNum === 1) {
-            this.roundPoints = 0;
-            
-            this.addTotal();
+            this.endRound()
+            this.$emit('lose')
           }
         // Emit an event to change the round poins for the
         // current player
         this.$emit('partial', this.roundPoints)
-      },
-        
-      addTotal() {
-        //Adds the total to the current player and restart
-        this.$emit('finished', this.roundPoints)
-        this.roundPoints = 0
-        this.diceNum = 1
       },
     },
     computed: {

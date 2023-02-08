@@ -3,14 +3,12 @@ import CurrentPoints from './CurrentPoints.vue'
 
 
 export default {
+  name: "Player",
   data() {
     return {
-      // Current player points
-      p1Current: 0,
-      p2Current: 0,
       // Total player points
       p1Points: 0,
-      p2Points: 10,
+      p2Points: 0,
     }
   },
   components: {
@@ -18,28 +16,31 @@ export default {
   },
   props: {
     pNumber: Number,
-    points: Number,
     p1Plays: Boolean,
+    roundPoints: Number,
   },
   methods: {
-    updatePoints() {
-      this.p1Points = points
-      this.p2Points = points
+    addTotal() {
+      if (this.p1Plays === true) {
+        this.p1Points += this.roundPoints
+        this.p1Current = 0
+      } else {
+        this.p2Points += this.roundPoints
+        this.p2Current = 0
+      }
+    },
+    reset() {
+      this.p1Points = 0
+      this.p2Points = 0
+      this.points = 0
     }
-  },
-  watch: {
-    points: function() {
-      console.log(points);
-      this.p1Points = value;
-      this.p2Points = value;
-    }
-  },
+  }
 }
 </script>
 
 <template>
   <div v-if="pNumber===1" class="player">
-    <h1 class="display-2" @click="points++">
+    <h1 class="display-2">
       PLAYER {{ pNumber }} 
       <span v-if="p1Plays" class="dot-container">
         <img src="../assets/redDot.svg" alt="red dot" class="red-dot-right"/>
@@ -48,7 +49,7 @@ export default {
     <h1 class="display-1">
       {{ p1Points }}
     </h1>
-    <CurrentPoints :current="p1Current"/>
+    <CurrentPoints :current="p1Plays ? roundPoints : 0"/>
   </div>
   <div v-else class="player player2">
     <h1 class="display-2">
@@ -58,9 +59,9 @@ export default {
          PLAYER {{ pNumber }}
     </h1>
     <h1 class="display-1">
-      {{ p2Points  }}
+      {{ p2Points }}
     </h1>
-    <CurrentPoints :current="p2Current"/>
+    <CurrentPoints :current="p1Plays ? 0 : roundPoints"/>
   </div>
 </template>
 

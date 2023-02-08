@@ -1,6 +1,8 @@
 <script>
   export default {
-    props: ['current'],
+    props: {
+      current: Number,
+    }
   }
 </script>
 

@@ -1,5 +1,4 @@
 <script>
-// import CurrentPoints from './components/CurrentPoints.vue'
 import Dice from './components/Dice.vue'
 import PlayerDash from './components/PlayerDash copy.vue';
 
@@ -10,7 +9,7 @@ export default {
       // If the current player is player 1
       p1Current: true,
       // Points of the current round
-      roundPoints: 120
+      roundPoints: 0,
     }
   },
   components: {
@@ -18,41 +17,37 @@ export default {
     PlayerDash,
   },
   methods: {
-    addPoints(currentPoints) {
-      // Add points to the current player and change player
-      if (this.p1Current) {
-        this.p1Points += currentPoints 
-        this.points1 = 0
-      } else {
-        this.p2Points += currentPoints
-        this.points2 = 0
-      }
-      this.p1Current = !this.p1Current
-    },
     
     roll() {
+      // This should update the currentPoints in the correct player
       this.$refs.dice.rollDice()
     },
     
     hold() {
-      this.$refs.dice.addTotal()
+      // Calls the method in players to add the current points to player
+      // total
+      this.$refs.player1.addTotal()
+      this.$refs.player2.addTotal()
+      // Doesn't works if I use this.$refs.player.addTotal() for both of
+      // the players and managing the current player in the component
+      this.$refs.dice.endRound()
+      this.changePlayer()
+    },
+    
+    changePlayer() {
+      // Changes player and set the round points to 0
+      this.roundPartial(0)
+      this.p1Current = !this.p1Current
     },
     
     roundPartial(partial) {
-      // #TODO refactor CurrentPoints into PlayerDash
-      if (this.p1Current) {
-        this.points1 = partial
-      } else {
-        this.points2 = partial
-      }
+      // Send message to PlayerDash with the current round points
+      this.roundPoints = partial
     },
     
     restartGame() {
-      this.p1Points = 0,
-      this.p2Points = 0,
-      this.p1Current = true,
-      this.points1 = 0,
-      this.points2 = 0
+      this.$refs.player.reset()
+      this.p1Current = true
     },
   
   }
@@ -63,8 +58,9 @@ export default {
   <div class="main-container">
     <PlayerDash 
       :pNumber="1"
-      :points="10"
       :p1Plays="p1Current"
+      :roundPoints="roundPoints"
+      ref="player1"
     />
     <div class="options-container">
       
@@ -77,7 +73,7 @@ export default {
       </div>
         
       <div id="dice">
-        <Dice @finished="addPoints" @partial="roundPartial" ref="dice"/>
+        <Dice @partial="roundPartial" @lose="changePlayer" ref="dice"/>
       </div>
       
       <div class="roll">
@@ -100,8 +96,9 @@ export default {
     
     <PlayerDash 
       :pNumber="2"
-      :points="roundPoints"
       :p1Plays="p1Current"
+      :roundPoints="roundPoints"
+      ref="player2"
     />
   </div>
 </template>
