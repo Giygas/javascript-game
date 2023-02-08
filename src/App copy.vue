@@ -10,6 +10,8 @@ export default {
       p1Current: true,
       // Points of the current round
       roundPoints: 0,
+      // For setting a timeout for clicking the roll button
+      disabledRoll: false,
     }
   },
   components: {
@@ -17,10 +19,20 @@ export default {
     PlayerDash,
   },
   methods: {
-    
+
     roll() {
+      
       // This should update the currentPoints in the correct player
-      this.$refs.dice.rollDice()
+      if (!this.disabledRoll) {
+        
+        this.$refs.dice.rollDice()
+      }
+      
+      this.disabledRoll = true
+      
+      setTimeout(function () {
+        this.disabledRoll = false}.bind(this), 2000
+      )
     },
     
     hold() {
@@ -50,7 +62,7 @@ export default {
       this.p1Current = true
     },
   
-  }
+  },
 }
 </script>
 
@@ -78,7 +90,11 @@ export default {
       
       <div class="roll">
         <h2 class="spacer button">
-          <span id="roll" class="button" @click="roll">
+          <span 
+            id="roll" 
+            class="button"
+            :disabled="disabledRoll" 
+            @click="roll">
             <img src="./assets/refreshIcon.svg" alt="Plus"/>ROLL
           </span>
         </h2>
