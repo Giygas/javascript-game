@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
   .player {
-    margin-top: 3rem;
+    margin-top: 2rem;
     height: 40vh;
     display: flex;
     flex-direction: column;

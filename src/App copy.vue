@@ -66,7 +66,36 @@ export default {
       :points="10"
       :p1Plays="p1Current"
     />
-    
+    <div class="options-container">
+      
+      <div class="newGame">
+        <h2>
+          <span id="newGame" class="button" @click="restartGame">
+            <img src="./assets/plusIcon.svg" alt="Plus"/>NEW GAME
+          </span>
+        </h2>
+      </div>
+        
+      <div id="dice">
+        <Dice @finished="addPoints" @partial="roundPartial" ref="dice"/>
+      </div>
+      
+      <div class="roll">
+        <h2 class="spacer button">
+          <span id="roll" class="button" @click="roll">
+            <img src="./assets/refreshIcon.svg" alt="Plus"/>ROLL
+          </span>
+        </h2>
+      </div>
+      
+      <div class="hold">
+        <h2>
+          <span id="hold" class="button" @click="hold">
+            <img src="./assets/arrowDown.svg" alt="Plus"/>HOLD
+          </span>
+        </h2>
+      </div>
+    </div>
     
     
     <PlayerDash 
@@ -95,6 +124,17 @@ export default {
       padding: 2rem 0rem;
     }
   }
+    
+  .options-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    height:100%;
+    min-width: 200px;
+    width:fit-content;
+    z-index:1;
+  }
   
   img {
     height: 20px;
@@ -110,29 +150,21 @@ export default {
   }
   
   .newGame {
+    margin-top: 2rem;
     justify-content: center;
     display: flex;
   }
   
-  .dice-container {
-    height: 45vh;
-    display: grid;
-    grid-template-rows: 1fr;
-    padding-bottom: 5rem;
-    
-    div {
-      justify-self: center;
-      align-self: center;
-    }
-    
-  }
-  
-  .buttonWrapper {
+  .roll {
+    padding-top: 25rem;
+    justify-content: center;
     display: flex;
-    flex-direction: column;
-    align-items: center;
   }
   
+  .hold {
+    justify-content: center;
+    display: flex;
+  }
 }
 
 </style>

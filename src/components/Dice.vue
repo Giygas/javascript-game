@@ -72,28 +72,20 @@
 </script>
 
 <template>
-  <div class="game">
-    <div class="container-dice">
-      <div class="dice-wrapper">
-        <div :class="getDice"></div>
-      </div>
-    </div>
+<div class="container-dice">
+  <div class="dice-wrapper">
+    <div :class="getDice"></div>
+  </div>
   </div>
   
 </template>
 
 <style scoped>
-.game {
-  position: relative;
-  
-}
 .container-dice {
-  display: inline-block;
-  width: fit-content;
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   
 }
 
