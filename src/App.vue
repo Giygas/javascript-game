@@ -1,5 +1,4 @@
 <script>
-import CurrentPoints from './components/CurrentPoints.vue'
 import Dice from './components/Dice.vue'
 import PlayerDash from './components/PlayerDash.vue';
 
@@ -7,125 +6,129 @@ export default {
   name: 'App',
   data() {
     return {
-      // Global player points
-      p1Points: 0,
-      p2Points: 0,
       // If the current player is player 1
       p1Current: true,
-      // Round points for each player.
-      // Just because I have 2 CurrentPoints components
-      //#TODO refactor this to include currenpoints in the playerDashboard 
-      points1: 0,
-      points2: 0,
+      // Points of the current round
+      roundPoints: 0,
+      // For setting a timeout for clicking the roll button
+      disabledRoll: false,
     }
   },
   components: {
-    CurrentPoints,
     Dice,
     PlayerDash,
   },
   methods: {
-    addPoints(currentPoints) {
-      // Add points to the current player and change player
-      if (this.p1Current) {
-        this.p1Points += currentPoints 
-        this.points1 = 0
-      } else {
-        this.p2Points += currentPoints
-        this.points2 = 0
-      }
-      this.p1Current = !this.p1Current
-    },
-    
+
     roll() {
-      this.$refs.dice.rollDice()
+      
+      // This should update the currentPoints in the correct player
+      if (!this.disabledRoll) {
+        this.disabledRoll = true
+        this.$refs.dice.rollDice()
+        setTimeout(function () {
+          this.disabledRoll = false}.bind(this), 1500
+        )
+      }
+      
     },
     
     hold() {
-      this.$refs.dice.addTotal()
+      // Calls the method in players to add the current points to player
+      // total
+      this.$refs.player1.addTotal()
+      this.$refs.player2.addTotal()
+      // Tried to pass the ref to the player component as this.$refs.player.addTotal()
+      // and manage the player that will receive the points in the method
+      // but apparently it's not possible to pass the same ref to both
+      // elements, only the last component was working and the other one wasn't
+      // So I just pass the addTotal to both players and manage the logic inside the method
+      this.$refs.dice.endRound()
+      this.changePlayer()
+    },
+    
+    changePlayer() {
+      // Changes player and set the round points to 0
+      this.roundPartial(0)
+      this.p1Current = !this.p1Current
     },
     
     roundPartial(partial) {
-      // #TODO refactor CurrentPoints into PlayerDash
-      if (this.p1Current) {
-        this.points1 = partial
-      } else {
-        this.points2 = partial
-      }
+      // Send message to PlayerDash with the current round points
+      this.roundPoints = partial
     },
     
     restartGame() {
-      this.p1Points = 0,
-      this.p2Points = 0,
-      this.p1Current = true,
-      this.points1 = 0,
-      this.points2 = 0
+      this.$refs.player.reset()
+      this.p1Current = true
     },
   
-  }
+  },
 }
 </script>
 
 <template>
   <div class="main-container">
-        <div class="grid newGame">
-            <h2>
-              <span id="newGame" class="button" @click="restartGame">
-                <img src="./assets/plusIcon.svg" alt="Plus"/>NEW GAME
-              </span>
-            </h2>
-        </div>
-        
-        <div class="grid dice-container">
-          <div id="player1">
-            <PlayerDash 
-              :pNumber="1"
-              :points="p1Points"
-              :p1Plays="p1Current"
-            />
-          </div>
-          <div id="dice">
-            <Dice @finished="addPoints" @partial="roundPartial" ref="dice"/>
-          </div>
-          <div id="player2">
-            <PlayerDash
-              :pNumber="2"
-              :points="p2Points"
-              :p1Plays="p1Current"
-            />
-          </div>
-        </div>
-        
-        <div class="grid">
-          <CurrentPoints :current="points1"/>
-          <div class="buttonWrapper">
-            <h2 class="spacer button">
-              <span id="roll" class="button" @click="roll">
-                <img src="./assets/refreshIcon.svg" alt="Plus"/>ROLL
-              </span>
-            </h2>
-            <h2>
-              <span id="hold" class="button" @click="hold">
-                <img src="./assets/arrowDown.svg" alt="Plus"/>HOLD
-              </span>
-            </h2>
-          </div>
-          <CurrentPoints :current="points2"/>
-        </div>
+    <PlayerDash 
+      :pNumber="1"
+      :p1Plays="p1Current"
+      :roundPoints="roundPoints"
+      ref="player1"
+    />
+    <div class="options-container">
+      
+      <div class="newGame">
+        <h2>
+          <span id="newGame" class="button" @click="restartGame">
+            <img src="./assets/plusIcon.svg" alt="Plus"/>NEW GAME
+          </span>
+        </h2>
       </div>
+        
+      <div id="dice">
+        <Dice @partial="roundPartial" @lose="changePlayer" ref="dice"/>
+      </div>
+      
+      <div class="roll">
+        <h2 class="spacer button">
+          <span 
+            id="roll" 
+            class="button"
+            :disabled="disabledRoll" 
+            @click="roll">
+            <img src="./assets/refreshIcon.svg" alt="Plus"/>ROLL
+          </span>
+        </h2>
+      </div>
+      
+      <div class="hold">
+        <h2>
+          <span id="hold" class="button" @click="hold">
+            <img src="./assets/arrowDown.svg" alt="Plus"/>HOLD
+          </span>
+        </h2>
+      </div>
+    </div>
+    
+    
+    <PlayerDash 
+      :pNumber="2"
+      :p1Plays="p1Current"
+      :roundPoints="roundPoints"
+      ref="player2"
+    />
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .main-container {
   background-color: #ffffff;
-  position: absolute;
-  padding: 2rem 6rem;
+  display: block;
   width: 100%;
   height: 100%;
-  z-index: 1;
   border-radius: 15px;
-
-
+  position: absolute;
+  
   span {
     display: flex;
     align-items: baseline;
@@ -134,6 +137,17 @@ export default {
       cursor: pointer;
       padding: 2rem 0rem;
     }
+  }
+    
+  .options-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    height:100%;
+    min-width: 200px;
+    width:fit-content;
+    z-index:1;
   }
   
   img {
@@ -150,42 +164,21 @@ export default {
   }
   
   .newGame {
+    margin-top: 2rem;
     justify-content: center;
     display: flex;
   }
   
-  .dice-container {
-    height: 45vh;
-    display: grid;
-    grid-template-rows: 1fr;
-    padding-bottom: 5rem;
-    
-    div {
-      justify-self: center;
-      align-self: center;
-    }
-    
-  }
-  
-  .buttonWrapper {
+  .roll {
+    padding-top: 25rem;
+    justify-content: center;
     display: flex;
-    flex-direction: column;
-    align-items: center;
   }
   
-}
-
-.main-container::after {
-  background: #f7f7f7 ;
-  content: '';
-  z-index: -1;
-  width: 50%;
-  height: 100%;
-  top: 0;
-  right: 0;
-  display: block;
-  position: absolute;
-  border-radius: 15px;
+  .hold {
+    justify-content: center;
+    display: flex;
+  }
 }
 
 </style>
