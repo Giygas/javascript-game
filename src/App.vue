@@ -21,13 +21,11 @@ export default {
   methods: {
 
     roll() {
-      
-      // This should update the currentPoints in the correct player
+      // Rolls the dice and sets a timeout for prevent spamming the roll button
       if (!this.disabledRoll) {
         this.disabledRoll = true
         this.$refs.dice.rollDice()
-        setTimeout(function () {
-          this.disabledRoll = false}.bind(this), 1500
+        setTimeout(function () {this.disabledRoll = false}.bind(this), 1500
         )
       }
       
