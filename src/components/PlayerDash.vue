@@ -40,7 +40,7 @@ export default {
 
 <template>
   <div v-if="pNumber===1" class="player">
-    <h1 class="display-2 p1">
+    <h1 class="display-2" :class="{ p1 : p1Plays}">
       PLAYER {{ pNumber }} 
 
     </h1>
@@ -50,8 +50,8 @@ export default {
     <CurrentPoints :current="p1Plays ? roundPoints : 0"/>
   </div>
   <div v-else class="player player2">
-    <h1 class="display-2 p2">
-         PLAYER {{ pNumber }}
+    <h1 class="display-2" :class="{p2 : !p1Plays}">
+      PLAYER {{ pNumber }}
     </h1>
     <h1 class="display-1">
       {{ p2Points }}
@@ -98,10 +98,10 @@ export default {
       }
       
       &.p1::after {
-        margin-left: 10px;
+        margin-right: -20px;
       }
       &.p2::before {
-        margin-right: 10px;
+        margin-left: -20px;
       }
     }
     .dot-container {
