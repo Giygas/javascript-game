@@ -40,11 +40,9 @@ export default {
 
 <template>
   <div v-if="pNumber===1" class="player">
-    <h1 class="display-2">
+    <h1 class="display-2" :class="{ p1 : p1Plays}">
       PLAYER {{ pNumber }} 
-      <span v-if="p1Plays" class="dot-container">
-        <img src="../assets/redDot.svg" alt="red dot" class="red-dot-right"/>
-      </span>
+
     </h1>
     <h1 class="display-1">
       {{ p1Points }}
@@ -52,11 +50,8 @@ export default {
     <CurrentPoints :current="p1Plays ? roundPoints : 0"/>
   </div>
   <div v-else class="player player2">
-    <h1 class="display-2">
-      <span v-if="!p1Plays" class="dot-container">
-        <img src="../assets/redDot.svg" alt="red dot" class="red-dot-left"/>
-      </span>
-         PLAYER {{ pNumber }}
+    <h1 class="display-2" :class="{p2 : !p1Plays}">
+      PLAYER {{ pNumber }}
     </h1>
     <h1 class="display-1">
       {{ p2Points }}
@@ -90,6 +85,24 @@ export default {
       line-height: normal;
       color: rgb(0, 0, 0);
       margin: 0;
+      
+      &.p1::after, &.p2::before  {
+        background-image: url('../assets/redDot.svg');
+        vertical-align: middle;
+        height: 20px;
+        width: 20px;
+        font-size: 20px;
+        background-size: 20px;
+        padding: 0 20px 5px 0;
+        content: '';
+      }
+      
+      &.p1::after {
+        margin-right: -20px;
+      }
+      &.p2::before {
+        margin-left: -20px;
+      }
     }
     .dot-container {
       position: absolute;
