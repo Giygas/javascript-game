@@ -1,68 +1,63 @@
 <script>
-import CurrentPoints from './CurrentPoints.vue'
+  import CurrentPoints from "./CurrentPoints.vue"
 
-
-export default {
-  name: "Player",
-  data() {
-    return {
-      // Total player points
-      points: 0,
-      roundPoints: 0
-    }
-  },
-  components: {
-    CurrentPoints,
-  },
-  props: {
-    pNumber: Number,
-    p1Plays: Boolean,
-    rolled: Number,
-  },
-  methods: {
-    addTotal() {
-      this.points += this.roundPoints
-      this.roundPoints = 0
-    },
-    lose() {
-      this.roundPoints = 0
-    },
-    reset() {
-      this.points = 0,
-      this.roundPoints = 0
-    },
-  },
-  computed: {
-    dotClass() {
+  export default {
+    name: "Player",
+    data() {
       return {
-        p1: this.pNumber === 1 && this.p1Plays,
-        p2: this.pNumber === 2 && !this.p1Plays
+        // Total player points
+        points: 0,
+        roundPoints: 0,
       }
-    }
-  },
-  watch: {
-    rolled(value) {
-      this.roundPoints += value
-      console.log(value)
-    }
+    },
+    components: {
+      CurrentPoints,
+    },
+    props: {
+      pNumber: Number,
+      p1Plays: Boolean,
+      rolled: Number,
+    },
+    methods: {
+      addTotal() {
+        this.points += this.roundPoints
+        this.roundPoints = 0
+      },
+      lose() {
+        this.roundPoints = 0
+      },
+      reset() {
+        ;(this.points = 0), (this.roundPoints = 0)
+      },
+    },
+    computed: {
+      dotClass() {
+        return {
+          p1: this.pNumber === 1 && this.p1Plays,
+          p2: this.pNumber === 2 && !this.p1Plays,
+        }
+      },
+    },
+    watch: {
+      rolled(value) {
+        this.roundPoints += value
+        console.log(value)
+      },
+    },
   }
-}
 </script>
 
 <template>
-  <div class="player" :class="{player2 : (pNumber == 2)}">
-    <h1 class="display-2" :class="dotClass">
-      PLAYER {{ pNumber }} 
-
-    </h1>
+  <div class="player" :class="{ player2: pNumber == 2 }">
+    <h1 class="display-2" :class="dotClass">PLAYER {{ pNumber }}</h1>
     <h1 class="display-1">
       {{ points }}
     </h1>
-    <CurrentPoints :current="roundPoints"/>
+    <CurrentPoints :current="roundPoints" />
   </div>
 </template>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
   .player {
     padding-top: 10rem;
     height: 100%;
@@ -80,25 +75,26 @@ export default {
       line-height: normal;
       color: rgb(0, 0, 0);
     }
-    
+
     .display-2 {
       font-size: 4rem;
       font-weight: 300;
       line-height: normal;
       color: rgb(0, 0, 0);
       margin: 0;
-      
-      &.p1::after, &.p2::before  {
-        background-image: url('../assets/redDot.svg');
+
+      &.p1::after,
+      &.p2::before {
+        background-image: url("../assets/redDot.svg");
         vertical-align: middle;
         height: 20px;
         width: 20px;
         font-size: 20px;
         background-size: 20px;
         padding: 0 20px 5px 0;
-        content: '';
+        content: "";
       }
-      
+
       &.p1::after {
         margin-right: -20px;
       }
@@ -109,7 +105,7 @@ export default {
     .dot-container {
       position: absolute;
     }
-    
+
     .red-dot-right {
       height: 20px;
       position: relative;
@@ -122,5 +118,4 @@ export default {
       margin-bottom: 10px;
     }
   }
-  
 </style>
