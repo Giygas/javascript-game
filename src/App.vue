@@ -1,6 +1,6 @@
 <script>
 import Dice from './components/Dice.vue'
-import PlayerDash from './components/PlayerDash.vue';
+import Player from './components/Player.vue';
 
 export default {
   name: 'App',
@@ -8,15 +8,17 @@ export default {
     return {
       // If the current player is player 1
       p1Current: true,
-      // Points of the current round
-      roundPoints: 0,
+      // Points of the current round for each player, so I don't need to 
+      // do the logic inside the component
+      rollP1: 0,
+      rollP2: 0,
       // For setting a timeout for clicking the roll button
       disabledRoll: false,
     }
   },
   components: {
     Dice,
-    PlayerDash,
+    Player,
   },
   methods: {
 
@@ -32,8 +34,7 @@ export default {
     },
     
     hold() {
-      // Calls the method in players to add the current points to player
-      // total
+      // Adds the current poins in player to his total
       this.$refs.player1.addTotal()
       this.$refs.player2.addTotal()
       // Tried to pass the ref to the player component as this.$refs.player.addTotal()
@@ -41,36 +42,48 @@ export default {
       // but apparently it's not possible to pass the same ref to both
       // elements, only the last component was working and the other one wasn't
       // So I just pass the addTotal to both players and manage the logic inside the method
-      this.$refs.dice.endRound()
+      this.$refs.dice.resetDice()
       this.changePlayer()
     },
     
     changePlayer() {
       // Changes player and set the round points to 0
-      this.roundPartial(0)
+      this.rollP1 = 0
+      this.rollP2 = 0
       this.p1Current = !this.p1Current
     },
     
-    roundPartial(partial) {
-      // Send message to PlayerDash with the current round points
-      this.roundPoints = partial
+    diceRolled(rollValue) {
+      if (rollValue === 1) {
+        this.changePlayer()
+      } else {
+        // Pass the roll value to the current player
+        this.p1Current ? this.rollP1 = rollValue : this.rollP2 = rollValue
+      }
     },
     
     restartGame() {
-      this.$refs.player.reset()
+      // Reset both players and set the current player to Player 1
+      this.$refs.player1.reset()
+      this.$refs.player2.reset()
       this.p1Current = true
     },
   
   },
+  watch: {
+    rollP1() {
+      console.log("p1Current is " + this.rollP1)
+    }
+  }
 }
 </script>
 
 <template>
   <div class="main-container">
-    <PlayerDash 
+    <Player
       :pNumber="1"
       :p1Plays="p1Current"
-      :roundPoints="roundPoints"
+      :rolled="rollP1"
       ref="player1"
     />
     <div class="options-container">
@@ -84,7 +97,7 @@ export default {
       </div>
         
       <div id="dice">
-        <Dice @partial="roundPartial" @lose="changePlayer" ref="dice"/>
+        <Dice @rollValue="diceRolled" ref="dice"/>
       </div>
       
       <div class="roll">
@@ -109,10 +122,10 @@ export default {
     </div>
     
     
-    <PlayerDash 
+    <Player 
       :pNumber="2"
       :p1Plays="p1Current"
-      :roundPoints="roundPoints"
+      :rolled="rollP2"
       ref="player2"
     />
   </div>
