@@ -39,14 +39,6 @@
         return `dice dice-${this.diceNum}`
       },
     },
-    watch: {
-      diceNum() {
-        console.log("Dice rolled!" + this.diceNum)
-      },
-      roundPoints() {
-        console.log("Round points " + this.roundPoints)
-      },
-    },
   }
 </script>
 
