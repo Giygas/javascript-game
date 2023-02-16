@@ -8,10 +8,6 @@
       return {
         // If the current player is player 1
         p1Current: true,
-        // Points of the current round for each player, so I don't need to
-        // do the logic inside the component
-        rollP1: 0,
-        rollP2: 0,
         // For setting a timeout for clicking the roll button
         disabledRoll: false,
       }
@@ -30,7 +26,7 @@
             function () {
               this.disabledRoll = false
             }.bind(this),
-            1500
+            1200
           )
         }
       },
@@ -50,8 +46,7 @@
 
       changePlayer() {
         // Changes player and set the round points to 0
-        this.rollP1 = 0
-        this.rollP2 = 0
+        this.p1Current ? this.$refs.player1.lose() : this.$refs.player2.lose()
         this.p1Current = !this.p1Current
       },
 
@@ -60,7 +55,9 @@
           this.changePlayer()
         } else {
           // Pass the roll value to the current player
-          this.p1Current ? (this.rollP1 = rollValue) : (this.rollP2 = rollValue)
+          this.p1Current
+            ? (this.$refs.player1.rolled(rollValue))
+            : (this.$refs.player2.rolled(rollValue))
         }
       },
 
@@ -71,17 +68,12 @@
         this.p1Current = true
       },
     },
-    watch: {
-      rollP1() {
-        console.log("p1Current is " + this.rollP1)
-      },
-    },
   }
 </script>
 
 <template>
   <div class="main-container">
-    <Player :pNumber="1" :p1Plays="p1Current" :rolled="rollP1" ref="player1" />
+    <Player :pNumber="1" :p1Plays="p1Current" ref="player1" />
     <div class="options-container">
       <div class="newGame">
         <h2>
@@ -112,7 +104,7 @@
       </div>
     </div>
 
-    <Player :pNumber="2" :p1Plays="p1Current" :rolled="rollP2" ref="player2" />
+    <Player :pNumber="2" :p1Plays="p1Current" ref="player2" />
   </div>
 </template>
 

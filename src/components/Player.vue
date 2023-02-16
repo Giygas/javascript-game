@@ -16,7 +16,6 @@
     props: {
       pNumber: Number,
       p1Plays: Boolean,
-      rolled: Number,
     },
     methods: {
       addTotal() {
@@ -27,8 +26,12 @@
         this.roundPoints = 0
       },
       reset() {
-        ;(this.points = 0), (this.roundPoints = 0)
+        this.points = 0
+        this.roundPoints = 0
       },
+      rolled(value) {
+        this.roundPoints += value
+      }
     },
     computed: {
       dotClass() {
@@ -36,12 +39,6 @@
           p1: this.pNumber === 1 && this.p1Plays,
           p2: this.pNumber === 2 && !this.p1Plays,
         }
-      },
-    },
-    watch: {
-      rolled(value) {
-        this.roundPoints += value
-        console.log(value)
       },
     },
   }
