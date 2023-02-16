@@ -1,14 +1,14 @@
 <script>
-  import CurrentPoints from "./CurrentPoints.vue";
+  import CurrentPoints from "./CurrentPoints.vue"
 
   export default {
     name: "Player",
     data() {
       return {
         // Total player points
-        p1Points: 0,
-        p2Points: 0,
-      };
+        points: 0,
+        roundPoints: 0,
+      }
     },
     components: {
       CurrentPoints,
@@ -16,41 +16,44 @@
     props: {
       pNumber: Number,
       p1Plays: Boolean,
-      roundPoints: Number,
+      rolled: Number,
     },
     methods: {
       addTotal() {
-        if (this.p1Plays === true) {
-          this.p1Points += this.roundPoints;
-          this.p1Current = 0;
-        } else {
-          this.p2Points += this.roundPoints;
-          this.p2Current = 0;
-        }
+        this.points += this.roundPoints
+        this.roundPoints = 0
+      },
+      lose() {
+        this.roundPoints = 0
       },
       reset() {
-        this.p1Points = 0;
-        this.p2Points = 0;
-        this.points = 0;
+        ;(this.points = 0), (this.roundPoints = 0)
       },
     },
-  };
+    computed: {
+      dotClass() {
+        return {
+          p1: this.pNumber === 1 && this.p1Plays,
+          p2: this.pNumber === 2 && !this.p1Plays,
+        }
+      },
+    },
+    watch: {
+      rolled(value) {
+        this.roundPoints += value
+        console.log(value)
+      },
+    },
+  }
 </script>
 
 <template>
-  <div v-if="pNumber === 1" class="player">
-    <h1 class="display-2" :class="{ p1: p1Plays }">PLAYER {{ pNumber }}</h1>
+  <div class="player" :class="{ player2: pNumber == 2 }">
+    <h1 class="display-2" :class="dotClass">PLAYER {{ pNumber }}</h1>
     <h1 class="display-1">
-      {{ p1Points }}
+      {{ points }}
     </h1>
-    <CurrentPoints :current="p1Plays ? roundPoints : 0" />
-  </div>
-  <div v-else class="player player2">
-    <h1 class="display-2" :class="{ p2: !p1Plays }">PLAYER {{ pNumber }}</h1>
-    <h1 class="display-1">
-      {{ p2Points }}
-    </h1>
-    <CurrentPoints :current="p1Plays ? 0 : roundPoints" />
+    <CurrentPoints :current="roundPoints" />
   </div>
 </template>
 

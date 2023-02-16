@@ -3,7 +3,7 @@
     props: {
       current: Number,
     },
-  };
+  }
 </script>
 
 <template>

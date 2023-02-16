@@ -4,12 +4,10 @@
     data() {
       return {
         diceNum: 1,
-        roundPoints: 0,
-      };
+      }
     },
     emits: {
-      partial: null,
-      lose: null,
+      rollValue: null,
     },
     methods: {
       setRandomDiceData() {
@@ -23,51 +21,25 @@
         const timer = setInterval(() => {
           this.setRandomDiceData();
           if (count >= 6) {
-            clearInterval(timer);
-            // Add the points when the interval finishes
-            this.addPoints();
+            clearInterval(timer)
+            // Emit the roll value to parent
+            this.$emit("rollValue", this.diceNum)
           }
           count += 1;
         }, 150);
       },
-
-      endRound() {
-        //Adds the total to the current player and restart
-        this.roundPoints = 0;
-        this.diceNum = 1;
-      },
-
-      addPoints() {
-        // Current points in the round
-        // If the number is 1, the player gets 0 points and
-        // the next player will start
-        this.roundPoints = this.roundPoints + this.diceNum;
-
-        if (this.diceNum === 1) {
-          this.endRound();
-          this.$emit("lose");
-        }
-        // Emit an event to change the round poins for the
-        // current player
-        this.$emit("partial", this.roundPoints);
+      resetDice() {
+        this.diceNum = 1
       },
     },
     computed: {
       getDice() {
         // Sets the class with the current number for the dice
         // everytime the dice status changes
-        return `dice dice-${this.diceNum}`;
+        return `dice dice-${this.diceNum}`
       },
     },
-    watch: {
-      diceNum() {
-        console.log("Dice rolled!" + this.diceNum);
-      },
-      roundPoints() {
-        console.log("Round points " + this.roundPoints);
-      },
-    },
-  };
+  }
 </script>
 
 <template>
